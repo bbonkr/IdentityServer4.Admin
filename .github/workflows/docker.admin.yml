@@ -13,7 +13,7 @@ on:
   #     - 'master'
 
 jobs:
-  docker:
+  docker-admin:
 
     runs-on: ubuntu-latest
     steps:
@@ -38,8 +38,6 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
-            # disabled if major zero
-            # type=semver,pattern={{major}},enable=${{ !startsWith(github.ref, 'refs/tags/v0.') }}
             type=sha
           labels: |
             org.opencontainers.image.title=IdentityServer.Admin
