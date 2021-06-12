@@ -45,6 +45,7 @@ jobs:
             org.opencontainers.image.title=IdentityServer.Admin
             org.opencontainers.image.description=Identity Server Admin
             # org.opencontainers.image.vendor=bbon
+
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
