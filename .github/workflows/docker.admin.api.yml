@@ -14,7 +14,7 @@ on:
 
 jobs:
   docker:
-    name: identityserver4.admin.api
+
     runs-on: ubuntu-latest
     steps:
       -
@@ -29,7 +29,7 @@ jobs:
         with:
           # list of Docker images to use as base name for tags
           images: |
-            ${{ secrets.DOCKER_REGISTRY_URI }}/${{ jobs.docker.name }}
+            ${{ secrets.DOCKER_REGISTRY_URI }}/identityserver4.admin.api
           # generate Docker tags based on the following events/attributes
           tags: |
             type=schedule
