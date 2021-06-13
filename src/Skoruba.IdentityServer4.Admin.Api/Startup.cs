@@ -5,6 +5,7 @@ using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -117,7 +118,12 @@ namespace Skoruba.IdentityServer4.Admin.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            else
+            {
+                // I want to use developer exception page on production
+                app.UseDeveloperExceptionPage();
+            }
+            
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -131,6 +137,7 @@ namespace Skoruba.IdentityServer4.Admin.Api
             app.UseRouting();
             UseAuthentication(app);
             app.UseCors();
+
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {

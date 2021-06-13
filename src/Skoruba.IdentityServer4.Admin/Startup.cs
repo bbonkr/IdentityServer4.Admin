@@ -2,6 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -42,6 +43,13 @@ namespace Skoruba.IdentityServer4.Admin
 
             // Add email senders which is currently setup for SendGrid and SMTP
             services.AddEmailSenders(Configuration);
+
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.KnownNetworks.Clear();
+                options.KnownProxies.Clear();
+                options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
@@ -49,6 +57,8 @@ namespace Skoruba.IdentityServer4.Admin
             app.UseRouting();
 
             app.UseIdentityServer4AdminUI();
+
+            app.UseForwardedHeaders();
 
             app.UseEndpoints(endpoint =>
             {
@@ -67,7 +77,9 @@ namespace Skoruba.IdentityServer4.Admin
             }
             else
             {
-                options.Security.UseHsts = true;
+                // I want to use develop exception page on production
+                //options.Security.UseDeveloperExceptionPage = true;
+                //options.Security.UseHsts = true;
             }
 
             // Set migration assembly for application of db migrations
