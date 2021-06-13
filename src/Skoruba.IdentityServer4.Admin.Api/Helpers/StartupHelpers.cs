@@ -65,6 +65,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
                         }
                         else
                         {
+                            builder.SetIsOriginAllowedToAllowWildcardSubdomains();
                             builder.WithOrigins(adminApiConfiguration.CorsAllowOrigins);
                         }
 
