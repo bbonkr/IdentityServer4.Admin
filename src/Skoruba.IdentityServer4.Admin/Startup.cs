@@ -1,3 +1,4 @@
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
@@ -46,9 +47,9 @@ namespace Skoruba.IdentityServer4.Admin
 
             services.Configure<ForwardedHeadersOptions>(options =>
             {
+                options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
                 options.KnownNetworks.Clear();
                 options.KnownProxies.Clear();
-                options.ForwardedHeaders = ForwardedHeaders.All;
             });
         }
 
@@ -58,7 +59,10 @@ namespace Skoruba.IdentityServer4.Admin
 
             app.UseIdentityServer4AdminUI();
 
-            app.UseForwardedHeaders();
+            if (string.Equals(Environment.GetEnvironmentVariable("ASPNETCORE_FORWARDEDHEADERS_ENABLED"),"true", StringComparison.OrdinalIgnoreCase))
+            {
+                app.UseForwardedHeaders();
+            }
 
             app.UseEndpoints(endpoint =>
             {

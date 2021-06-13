@@ -519,15 +519,15 @@ namespace Skoruba.IdentityServer4.Admin.UI.Helpers
         /// <param name="configuration"></param>
         public static void UseSecurityHeaders(this IApplicationBuilder app, List<string> cspTrustedDomains)
         {
-            var forwardingOptions = new ForwardedHeadersOptions()
-            {
-                ForwardedHeaders = ForwardedHeaders.All
-            };
+            //var forwardingOptions = new ForwardedHeadersOptions()
+            //{
+            //    //ForwardedHeaders = ForwardedHeaders.All
+            //    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
+            //};
+            //forwardingOptions.KnownNetworks.Clear();
+            //forwardingOptions.KnownProxies.Clear();
 
-            forwardingOptions.KnownNetworks.Clear();
-            forwardingOptions.KnownProxies.Clear();
-
-            app.UseForwardedHeaders(forwardingOptions);
+            //app.UseForwardedHeaders(forwardingOptions);
 
             app.UseXXssProtection(options => options.EnabledWithBlockMode());
             app.UseXContentTypeOptions();
