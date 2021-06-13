@@ -97,7 +97,7 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
         {
             var forwardingOptions = new ForwardedHeadersOptions()
             {
-                ForwardedHeaders = ForwardedHeaders.All
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
             };
 
             forwardingOptions.KnownNetworks.Clear();
@@ -332,8 +332,9 @@ namespace Skoruba.IdentityServer4.STS.Identity.Helpers
                     options.Events.RaiseErrorEvents = true;
                     options.Events.RaiseInformationEvents = true;
                     options.Events.RaiseFailureEvents = true;
-                    options.Events.RaiseSuccessEvents = true;
+                    options.Events.RaiseSuccessEvents = true;                    
                     
+
                     if (!string.IsNullOrEmpty(advancedConfiguration.IssuerUri))
                     {
                         options.IssuerUri = advancedConfiguration.IssuerUri;

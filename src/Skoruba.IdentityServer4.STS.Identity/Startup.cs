@@ -20,12 +20,12 @@ namespace Skoruba.IdentityServer4.STS.Identity
     public class Startup
     {
         public IConfiguration Configuration { get; }
-        public IWebHostEnvironment Environment { get; }
+        public IWebHostEnvironment WebHostEnvironment { get; }
 
-        public Startup(IWebHostEnvironment environment, IConfiguration configuration)
+        public Startup(IWebHostEnvironment webHostEnvironment, IConfiguration configuration)
         {
             Configuration = configuration;
-            Environment = environment;
+            WebHostEnvironment = webHostEnvironment;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -59,9 +59,10 @@ namespace Skoruba.IdentityServer4.STS.Identity
 
             services.Configure<ForwardedHeadersOptions>(options =>
             {
+                options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+
                 options.KnownNetworks.Clear();
-                options.KnownProxies.Clear();
-                options.ForwardedHeaders = ForwardedHeaders.All;
+                options.KnownProxies.Clear();               
             });
         }
 
@@ -81,7 +82,10 @@ namespace Skoruba.IdentityServer4.STS.Identity
             // I want to use developer exception page on production
             app.UseDeveloperExceptionPage();
 
-            app.UseForwardedHeaders();
+            if (string.Equals(Environment.GetEnvironmentVariable("ASPNETCORE_FORWARDEDHEADERS_ENABLED"), "true", StringComparison.OrdinalIgnoreCase))
+            {
+                app.UseForwardedHeaders();
+            }                
 
             app.UsePathBase(Configuration.GetValue<string>("BasePath"));
 

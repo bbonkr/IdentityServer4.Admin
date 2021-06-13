@@ -347,7 +347,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
         {
             var forwardingOptions = new ForwardedHeadersOptions()
             {
-                ForwardedHeaders = ForwardedHeaders.All
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
             };
 
             forwardingOptions.KnownNetworks.Clear();
