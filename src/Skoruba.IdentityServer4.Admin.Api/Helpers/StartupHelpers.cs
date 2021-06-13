@@ -71,6 +71,7 @@ namespace Skoruba.IdentityServer4.Admin.Api.Helpers
 
                         builder.AllowAnyHeader();
                         builder.AllowAnyMethod();
+                        builder.AllowCredentials();
                     });
             });
 
