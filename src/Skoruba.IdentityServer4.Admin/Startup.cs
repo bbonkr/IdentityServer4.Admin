@@ -48,7 +48,7 @@ namespace Skoruba.IdentityServer4.Admin
             {
                 options.KnownNetworks.Clear();
                 options.KnownProxies.Clear();
-                options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+                options.ForwardedHeaders = ForwardedHeaders.All;
             });
         }
 
